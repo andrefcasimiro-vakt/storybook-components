@@ -1,0 +1,37 @@
+version: '3'
+
+services:
+  database:
+    image: postgres:9.6-alpine
+    container_name: image-database
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_DB=${DATABASE_NAME}
+      - POSTGRES_USER=${DATABASE_USER}
+      - POSTGRES_PASSWORD=${DATABASE_PASSWORD}
+    volumes:
+      - ./image-database/postgres-data/shared:/var/lib/postgresql/data
+      - ./image-database/init:/docker-entrypoint-initdb.d/
+    healthcheck:
+        test: ['CMD-SHELL', 'pg_isready -U postgres']
+        timeout: 20s
+        retries: 15
+  api:
+    build:
+      context: image-api/
+      dockerfile: Dockerfile
+    container_name: image-api
+    depends_on:
+      - database
+    image: node:10
+    environment:
+      DATABASE_URL: ${DATABASE_URL}
+      NODE_ENV: development
+      PORT: 8000
+    ports:
+      - "8000:8000"
+    command: npm start
+    volumes:
+      - ./image-api/app/
+      - ./image-api/app/node_modules/

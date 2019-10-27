@@ -1,0 +1,21 @@
+{
+  "name": "midikrew-api",
+  "version": "1.0.0",
+  "description": "Midikrew api",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "midikrew",
+    "api"
+  ],
+  "author": "andré fernandes",
+  "license": "ISC",
+  "repository": {},
+  "dependencies": {
+    "node": "^10",
+    "nodemon": "^1.19.4"
+  }
+}
