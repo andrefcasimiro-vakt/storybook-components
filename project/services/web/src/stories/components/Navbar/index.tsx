@@ -1,6 +1,7 @@
 import React, { CSSProperties, ReactNode } from 'react';
 import StatefulLi from './StatefulLi';
-import { mapChildren } from './helpers'
+import { mapChildren } from './helpers';
+import { defaultStyle } from './style';
 import 'antd/dist/antd.css';
 
 interface INavbarProps {
@@ -17,7 +18,7 @@ interface INavbarProps {
  * If child entry is of type ul, will render sub-children as a group of navbar links
  * Otherwise, it will render child elements as per display and flex guidelines
  */
-const Navbar = ({ children, style }: INavbarProps) => {
+const Navbar = ({ children, style = defaultStyle }: INavbarProps) => {
   if (!children) {
       return null;
   }

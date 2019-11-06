@@ -1,26 +1,31 @@
-import React, { ReactNode, useState } from 'react';
+import React, { ReactNode, Component, FunctionComponent, ComponentType } from 'react';
 import Caret from '../../../common/Caret';
+import withOpen from '../../../hocs/withOpen';
+import { compose } from '../../../utils/functions';
 
-interface ILiProps {
+interface Own {
   children: ReactNode;
-  style: any;
+  style: Object;
   list: [],
-  onDraw: Function,
+  onDraw: (list: JSX.Element[], index: number) => JSX.Element,
 }
 
-const StatefulLi = ({ children, style, list, onDraw }: ILiProps) => {
-  const [isOpen, setIsOpen] = useState(false)
+const StatefulLi = ({ children, style, list, onDraw, isOpen, setIsOpen }: Added) => (
+  <>
+    <li style={style}>
+      {children} <Caret orientation={isOpen ? 'up' : 'down'} onClick={() => setIsOpen(!isOpen)} />
+    </li>
+    {isOpen && list.map((entry: JSX.Element, index: number) => entry.props.children && onDraw(entry.props.children, index))}
+  </>
+);
 
-  return (
-    <>
-      <li style={style}>
-          {children} <Caret orientation={isOpen ? 'up' : 'down'} onClick={() => setIsOpen(!isOpen)} />
-      </li>
-      {isOpen &&
-          list.map((entry: any, index: number) => entry.props.children && isOpen && onDraw(entry.props.children, index))
-      }
-    </>
-  );
-};
+interface Added extends Own {
+  isOpen: boolean,
+  setIsOpen: (value: boolean) => boolean,
+}
 
-export default StatefulLi;
+const enhancer = compose(
+  withOpen,
+);
+
+export default enhancer(StatefulLi);

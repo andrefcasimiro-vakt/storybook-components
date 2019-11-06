@@ -7,32 +7,8 @@ const stories = storiesOf('Navbar', module);
 stories.add(
   'default',
     () => {
-        // @ Define the style of the component
-        const defaultStyle = {
-            nav: {
-                alignItems: 'center',
-                backgroundColor: 'cyan',
-                display: 'flex',
-                flexDirection: 'row',
-                justifyContent: 'space-evenly',
-            },
-
-            ul: {
-                display: 'flex',
-                flexDirection: 'row',
-                listStyleType: 'none',
-                margin: 0,
-                padding: 0,
-            },
-
-            li: {
-                margin: '1rem',
-                style: 'none',
-            }
-        };
-
         return (
-            <Navbar style={defaultStyle}>
+            <Navbar>
                 <section>
                     <h2>Logo</h2>
                 </section>
